@@ -1,3 +1,29 @@
+# Run locally (no Docker)
+
+This project can be run directly on your machine; Docker is **not required**.
+
+## Frontend (Vite + React)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The app will start on the local Vite URL (usually `http://localhost:5173`).
+
+## Backend (Python modules)
+
+The backend logic is plain Python scripts under `backend/`.
+You can run them directly, for example:
+
+```bash
+cd backend
+python valuation.py
+```
+
+---
+
 Perché le soglie e non una formula lineare
 Potresti chiederti: perché non semplicemente valore / valore_massimo? Ad esempio 16% / 40% = 0.4.
 La risposta è che il valore aziendale non cresce linearmente con i margini. La differenza tra un EBITDA margin del 5% e del 10% è enorme in termini di salute aziendale. La differenza tra 25% e 30% è molto meno significativa. Le soglie catturano questa non-linearità reale, ed è per questo che si ispirano al modello Altman Z-Score che usa esattamente lo stesso approccio.
