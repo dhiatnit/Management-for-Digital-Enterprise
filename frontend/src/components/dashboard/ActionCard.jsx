@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useI18n } from "../../i18n";
 
 export const ActionCard = ({ index, action, delay = 0 }) => {
+  const { lang } = useI18n();
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -31,7 +33,7 @@ export const ActionCard = ({ index, action, delay = 0 }) => {
         <span>&bull;</span>
         <span className="font-mono text-[var(--color-accent-primary)]">{action.sqf_delta}</span>
         <span>&bull;</span>
-        <span className="uppercase tracking-wider">{action.capital} Capital</span>
+        <span className="uppercase tracking-wider">{lang === "it" ? `Capitale ${action.capital}` : `${action.capital} Capital`}</span>
       </div>
     </motion.div>
   );

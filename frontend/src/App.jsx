@@ -8,6 +8,7 @@ import { Step3Questionnaire } from './components/steps/Step3Questionnaire';
 import { Step4Dashboard } from './components/steps/Step4Dashboard';
 import { Button } from './components/ui';
 import { submitValuation } from './hooks/useValuation';
+import { useI18n } from './i18n';
 
 const DEMO = {
   companyName:         "Tecno Srl",
@@ -32,6 +33,7 @@ const DEMO = {
 };
 
 export default function App() {
+  const { t, lang } = useI18n();
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPhase, setLoadingPhase] = useState(0);
@@ -76,13 +78,6 @@ export default function App() {
     setIsLoading(true);
     setLoadingPhase(0);
 
-    // Simulate multi-step loading animation
-    const phases = [
-      "Normalizzazione dati",
-      "Scoring 4 capitali",
-      "Valutazione finale"
-    ];
-    
     // Increment phase every 800ms
     const interval = setInterval(() => {
       setLoadingPhase((p) => Math.min(p + 1, 2));
@@ -114,9 +109,9 @@ export default function App() {
           "benchmarks": { "financial": 0.65, "technological": 0.55, "human": 0.60, "relational": 0.68 },
           "gaps_vs_benchmark": { "financial": -0.055, "technological": -0.05, "human": -0.2625, "relational": -0.41 },
           "top3_actions": [
-            { "title": "Riduci la concentrazione clienti", "desc": "Porta i top-3 clienti sotto il 40% del fatturato.", "impact": 14, "capital": "financial", "horizon": "18–24 mesi", "sqf_delta": "+0.12 SQF" },
-            { "title": "Sviluppa partnership strategiche", "desc": "Costruisci un ecosistema di partner certificati", "impact": 10, "capital": "relational", "horizon": "12-18 mesi", "sqf_delta": "+0.08 SQF" },
-            { "title": "Accelera maturità digitale", "desc": "Digitalizza processi core", "impact": 8, "capital": "technological", "horizon": "18–24 mesi", "sqf_delta": "+0.05 SQF" }
+            { "title": lang === "it" ? "Riduci la concentrazione clienti" : "Reduce client concentration", "desc": lang === "it" ? "Porta i top-3 clienti sotto il 40% del fatturato." : "Bring top-3 clients below 40% of revenue.", "impact": 14, "capital": "financial", "horizon": lang === "it" ? "18–24 mesi" : "18–24 months", "sqf_delta": "+0.12 SQF" },
+            { "title": lang === "it" ? "Sviluppa partnership strategiche" : "Develop strategic partnerships", "desc": lang === "it" ? "Costruisci un ecosistema di partner certificati" : "Build an ecosystem of certified partners", "impact": 10, "capital": "relational", "horizon": lang === "it" ? "12-18 mesi" : "12-18 months", "sqf_delta": "+0.08 SQF" },
+            { "title": lang === "it" ? "Accelera maturità digitale" : "Accelerate digital maturity", "desc": lang === "it" ? "Digitalizza processi core" : "Digitize core processes", "impact": 8, "capital": "technological", "horizon": lang === "it" ? "18–24 mesi" : "18–24 months", "sqf_delta": "+0.05 SQF" }
           ]
         };
       }
@@ -153,15 +148,15 @@ export default function App() {
               className="absolute inset-0 flex flex-col items-center justify-center p-8 z-10"
             >
               <div className="w-full max-w-md bg-[var(--color-bg-elevated)] p-8 rounded-xl border border-[var(--color-border-subtle)] shadow-[var(--shadow-glow-primary)]">
-                <h2 className="text-xl font-display font-bold mb-6 text-center text-[var(--color-text-primary)]">Analisi in corso...</h2>
+                <h2 className="text-xl font-display font-bold mb-6 text-center text-[var(--color-text-primary)]">{t.app.loadingTitle}</h2>
                 <div className="flex flex-col gap-4 font-mono text-xs">
-                  {["Normalizzazione dati", "Scoring 4 capitali", "Valutazione finale"].map((phase, idx) => (
+                  {t.app.phases.map((phase, idx) => (
                     <div key={phase} className="flex flex-col gap-1">
                       <div className="flex justify-between">
                         <span className={idx <= loadingPhase ? "text-[var(--color-accent-primary)]" : "text-[var(--color-text-muted)]"}>
                           {phase}
                         </span>
-                        <span>{idx < loadingPhase ? "100%" : idx === loadingPhase ? "Caricamento..." : "0%"}</span>
+                        <span>{idx < loadingPhase ? "100%" : idx === loadingPhase ? t.app.loading : "0%"}</span>
                       </div>
                       <div className="h-1.5 w-full bg-[var(--color-bg-base)] rounded-full overflow-hidden relative">
                         <motion.div 
@@ -201,16 +196,16 @@ export default function App() {
         <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-bg-base)]/80 backdrop-blur-md border-t border-[var(--color-border-subtle)] p-4 flex justify-between items-center z-40">
           <div className="max-w-7xl mx-auto w-full flex justify-between px-6">
             <Button variant="ghost" onClick={loadDemoData} className="!text-[var(--color-accent-second)] text-sm">
-              Carica Demo
+              {t.app.loadDemo}
             </Button>
             <div className="flex gap-4">
               {currentStep > 1 && (
                 <Button variant="secondary" onClick={handleBack}>
-                  Indietro
+                  {t.app.back}
                 </Button>
               )}
               <Button variant="primary" onClick={handleNext}>
-                {currentStep === 3 ? "Analizza" : "Avanti"}
+                {currentStep === 3 ? t.app.analyze : t.app.next}
               </Button>
             </div>
           </div>

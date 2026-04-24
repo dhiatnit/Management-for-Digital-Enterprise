@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
+import { useI18n } from "../../i18n";
 
 export const StepIndicator = ({ currentStep }) => {
+  const { t } = useI18n();
   const steps = [
-    { num: 1, label: "Profilo" },
-    { num: 2, label: "Bilancio" },
-    { num: 3, label: "Quiz" },
-    { num: 4, label: "Dashboard" },
+    { num: 1, label: t.steps[0] },
+    { num: 2, label: t.steps[1] },
+    { num: 3, label: t.steps[2] },
+    { num: 4, label: t.steps[3] },
   ];
 
   return (

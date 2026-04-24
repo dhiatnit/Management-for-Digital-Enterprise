@@ -4,8 +4,10 @@ import { RadarChart } from "../dashboard/RadarChart";
 import { ScoreBar } from "../dashboard/ScoreBar";
 import { ActionCard } from "../dashboard/ActionCard";
 import { Button } from "../ui";
+import { useI18n } from "../../i18n";
 
 export const Step4Dashboard = ({ result, onReset }) => {
+  const { lang } = useI18n();
   if (!result) return null;
 
   const {
@@ -40,35 +42,35 @@ export const Step4Dashboard = ({ result, onReset }) => {
       {/* 4 KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard
-          title="VALORE STIMATO"
+          title={lang === "it" ? "VALORE STIMATO" : "ESTIMATED VALUE"}
           value={`€ ${(estimated_value / 1000000).toFixed(2)}M`}
-          subtitle={`Range: € ${(value_min / 1000000).toFixed(2)}M - € ${(value_max / 1000000).toFixed(2)}M`}
-          footer={`Multiplo: ${multiple_used}x EBITDA`}
+          subtitle={`${lang === "it" ? "Range" : "Range"}: € ${(value_min / 1000000).toFixed(2)}M - € ${(value_max / 1000000).toFixed(2)}M`}
+          footer={`${lang === "it" ? "Multiplo" : "Multiple"}: ${multiple_used}x EBITDA`}
           delay={0.1}
           variant="primary"
         />
         
         <KpiCard
-          title="VALUE GAP"
+          title={lang === "it" ? "VALUE GAP" : "VALUE GAP"}
           value={`+${value_gap_pct.toFixed(1)}%`}
-          subtitle={`€ ${(gap_absolute / 1000000).toFixed(2)}M potenziale`}
+          subtitle={lang === "it" ? `€ ${(gap_absolute / 1000000).toFixed(2)}M potenziale` : `€ ${(gap_absolute / 1000000).toFixed(2)}M potential`}
           footer={<div className="w-full bg-[var(--color-bg-base)] h-1.5 rounded-full mt-2 overflow-hidden"><div className="h-full bg-[var(--color-accent-second)] w-3/4" /></div>}
           delay={0.2}
           variant="secondary"
         />
 
         <KpiCard
-          title="QUALITY SCORE"
+          title={lang === "it" ? "QUALITY SCORE" : "QUALITY SCORE"}
           value={`${quality_score} / 100`}
-          subtitle={quality_score >= 50 ? "In linea/sopra media" : "Sotto la media di settore"}
+          subtitle={quality_score >= 50 ? (lang === "it" ? "In linea/sopra media" : "In line/above average") : (lang === "it" ? "Sotto la media di settore" : "Below industry average")}
           delay={0.3}
           variant="primary"
         />
 
         <KpiCard
-          title="RISK INDEX"
+          title={lang === "it" ? "INDICE DI RISCHIO" : "RISK INDEX"}
           value={risk_index.label}
-          subtitle="Basato su SQF e gap"
+          subtitle={lang === "it" ? "Basato su SQF e gap" : "Based on SQF and gap"}
           delay={0.4}
           variant={risk_index.label === "LOW" ? "secondary" : risk_index.label === "MEDIUM" ? "warning" : "danger"}
         />
@@ -82,7 +84,7 @@ export const Step4Dashboard = ({ result, onReset }) => {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="lg:col-span-1 bg-[var(--color-bg-elevated)] p-6 rounded-xl border border-[var(--color-border-subtle)] shadow-[var(--shadow-card)] flex flex-col items-center justify-center"
         >
-          <h3 className="font-display text-lg font-bold text-[var(--color-text-primary)] w-full text-left mb-4">Radar 4 Capitali</h3>
+          <h3 className="font-display text-lg font-bold text-[var(--color-text-primary)] w-full text-left mb-4">{lang === "it" ? "Radar 4 Capitali" : "4-Capital Radar"}</h3>
           <RadarChart data={radarData} />
         </motion.div>
 
@@ -94,7 +96,7 @@ export const Step4Dashboard = ({ result, onReset }) => {
             transition={{ delay: 0.6 }}
             className="font-display text-lg font-bold text-[var(--color-text-primary)]"
           >
-            Top 3 Priority Actions
+            {lang === "it" ? "Top 3 Azioni Prioritarie" : "Top 3 Priority Actions"}
           </motion.h3>
           <div className="flex flex-col gap-4">
             {top3_actions.map((action, idx) => (
@@ -111,7 +113,7 @@ export const Step4Dashboard = ({ result, onReset }) => {
         transition={{ delay: 1.0 }}
         className="bg-[var(--color-bg-elevated)] p-6 rounded-xl border border-[var(--color-border-subtle)] shadow-[var(--shadow-card)]"
       >
-        <h3 className="font-display text-lg font-bold text-[var(--color-text-primary)] mb-6">Score Breakdown vs Benchmark</h3>
+        <h3 className="font-display text-lg font-bold text-[var(--color-text-primary)] mb-6">{lang === "it" ? "Dettaglio Score vs Benchmark" : "Score Breakdown vs Benchmark"}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
           <ScoreBar capital="Financial Capital" actual={scores.financial} benchmark={benchmarks.financial} gap={gaps_vs_benchmark.financial} />
           <ScoreBar capital="Technological Capital" actual={scores.technological} benchmark={benchmarks.technological} gap={gaps_vs_benchmark.technological} />
@@ -121,7 +123,7 @@ export const Step4Dashboard = ({ result, onReset }) => {
       </motion.div>
 
       <div className="flex justify-center mt-6">
-        <Button onClick={onReset} variant="secondary">Nuova Analisi</Button>
+        <Button onClick={onReset} variant="secondary">{lang === "it" ? "Nuova Analisi" : "New Analysis"}</Button>
       </div>
     </motion.div>
   );
