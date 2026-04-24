@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useI18n } from "../../i18n";
 
 export const ScoreBar = ({ capital, actual, benchmark, gap }) => {
+  const { lang } = useI18n();
   const isPositive = gap >= 0;
   
   return (
@@ -8,7 +10,7 @@ export const ScoreBar = ({ capital, actual, benchmark, gap }) => {
       <div className="flex justify-between items-end">
         <span className="text-sm font-medium text-[var(--color-text-primary)]">{capital}</span>
         <span className={`font-mono text-xs ${isPositive ? "text-[var(--color-accent-second)]" : "text-[var(--color-accent-danger)]"}`}>
-          {isPositive ? "+" : ""}{(gap * 100).toFixed(1)}% vs Bench
+          {isPositive ? "+" : ""}{(gap * 100).toFixed(1)}% {lang === "it" ? "vs Benchmark" : "vs Benchmark"}
         </span>
       </div>
       

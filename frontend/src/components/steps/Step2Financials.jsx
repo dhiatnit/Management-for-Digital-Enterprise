@@ -1,8 +1,10 @@
 import { Input, Slider } from "../ui";
 import { motion } from "framer-motion";
 import { Controller } from "react-hook-form";
+import { useI18n } from "../../i18n";
 
 export const Step2Financials = ({ register, control, errors, watch }) => {
+  const { lang } = useI18n();
   const rev1 = parseFloat(watch("revenueY1")) || 0;
   const rev3 = parseFloat(watch("revenueY3")) || 0;
   const ebitda = parseFloat(watch("ebitda")) || 0;
@@ -31,42 +33,42 @@ export const Step2Financials = ({ register, control, errors, watch }) => {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-second)]" />
         
         <div className="flex flex-col gap-2 mb-2">
-          <h2 className="font-display text-2xl font-bold text-[var(--color-text-primary)]">Dati di Bilancio</h2>
-          <p className="text-[var(--color-text-secondary)] text-sm">Inserisci i dati oggettivi verificabili dal bilancio aziendale.</p>
+          <h2 className="font-display text-2xl font-bold text-[var(--color-text-primary)]">{lang === "it" ? "Dati di Bilancio" : "Financial Data"}</h2>
+          <p className="text-[var(--color-text-secondary)] text-sm">{lang === "it" ? "Inserisci i dati oggettivi verificabili dal bilancio aziendale." : "Enter objective data verifiable from financial statements."}</p>
         </div>
 
         <div className="flex flex-col gap-5">
           <Input
-            label="REVENUE ANNO 1 (€)"
+            label={lang === "it" ? "RICAVI ANNO 1 (€)" : "REVENUE YEAR 1 (€)"}
             type="number"
             placeholder="0"
             rightIcon="€"
             error={errors.revenueY1}
-            {...register("revenueY1", { required: "Campo obbligatorio", min: { value: 1, message: "Deve essere > 0" } })}
+            {...register("revenueY1", { required: lang === "it" ? "Campo obbligatorio" : "Required field", min: { value: 1, message: lang === "it" ? "Deve essere > 0" : "Must be > 0" } })}
           />
           <Input
-            label="REVENUE ANNO 2 (€)"
+            label={lang === "it" ? "RICAVI ANNO 2 (€)" : "REVENUE YEAR 2 (€)"}
             type="number"
             placeholder="0"
             rightIcon="€"
             error={errors.revenueY2}
-            {...register("revenueY2", { required: "Campo obbligatorio", min: { value: 1, message: "Deve essere > 0" } })}
+            {...register("revenueY2", { required: lang === "it" ? "Campo obbligatorio" : "Required field", min: { value: 1, message: lang === "it" ? "Deve essere > 0" : "Must be > 0" } })}
           />
           <Input
-            label="REVENUE ANNO 3 (€) - Più recente"
+            label={lang === "it" ? "RICAVI ANNO 3 (€) - Più recente" : "REVENUE YEAR 3 (€) - Most recent"}
             type="number"
             placeholder="0"
             rightIcon="€"
             error={errors.revenueY3}
-            {...register("revenueY3", { required: "Campo obbligatorio", min: { value: 1, message: "Deve essere > 0" } })}
+            {...register("revenueY3", { required: lang === "it" ? "Campo obbligatorio" : "Required field", min: { value: 1, message: lang === "it" ? "Deve essere > 0" : "Must be > 0" } })}
           />
           <Input
-            label="EBITDA (€) - Anno 3"
+            label={lang === "it" ? "EBITDA (€) - Anno 3" : "EBITDA (€) - Year 3"}
             type="number"
             placeholder="0"
             rightIcon="€"
             error={errors.ebitda}
-            {...register("ebitda", { required: "Campo obbligatorio" })}
+            {...register("ebitda", { required: lang === "it" ? "Campo obbligatorio" : "Required field" })}
           />
         </div>
       </div>
@@ -74,7 +76,7 @@ export const Step2Financials = ({ register, control, errors, watch }) => {
       {/* Right Column: Preview & Slider */}
       <div className="flex-1 flex flex-col gap-6">
         <div className="bg-[var(--color-bg-surface)] p-6 rounded-xl border border-[var(--color-border-subtle)] shadow-[var(--shadow-card)] flex flex-col gap-6">
-          <h3 className="font-mono text-sm tracking-widest text-[var(--color-text-secondary)]">PREVIEW CALCOLATA</h3>
+          <h3 className="font-mono text-sm tracking-widest text-[var(--color-text-secondary)]">{lang === "it" ? "ANTEPRIMA CALCOLATA" : "CALCULATED PREVIEW"}</h3>
           
           <div className="flex flex-col gap-4">
             <div className="flex justify-between items-end border-b border-[var(--color-border-subtle)] pb-2">
@@ -90,13 +92,13 @@ export const Step2Financials = ({ register, control, errors, watch }) => {
 
           <div className="p-4 bg-[var(--color-bg-base)] rounded-[6px] border border-[var(--color-border-subtle)]">
             <p className="text-xs text-[var(--color-text-muted)] italic">
-              Calcolato automaticamente dai dati inseriti (CAGR su 3 anni).
+              {lang === "it" ? "Calcolato automaticamente dai dati inseriti (CAGR su 3 anni)." : "Automatically calculated from entered data (3-year CAGR)."}
             </p>
           </div>
         </div>
 
         <div className="bg-[var(--color-bg-elevated)] p-6 rounded-xl border border-[var(--color-border-subtle)] shadow-[var(--shadow-card)]">
-          <h3 className="font-mono text-sm tracking-widest text-[var(--color-text-secondary)] mb-4">DATO IBRIDO</h3>
+          <h3 className="font-mono text-sm tracking-widest text-[var(--color-text-secondary)] mb-4">{lang === "it" ? "DATO IBRIDO" : "HYBRID DATA"}</h3>
           <Controller
             name="techInvestment"
             control={control}
@@ -114,7 +116,7 @@ export const Step2Financials = ({ register, control, errors, watch }) => {
             )}
           />
           <p className="text-xs text-[var(--color-text-muted)] mt-4">
-            * Dato dichiarato — da validare in seguito con i bilanci
+            {lang === "it" ? "* Dato dichiarato — da validare in seguito con i bilanci" : "* Declared data — to be validated later against financial statements"}
           </p>
         </div>
       </div>

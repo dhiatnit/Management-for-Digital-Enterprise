@@ -1,8 +1,10 @@
 import { Slider, QualitativeScale } from "../ui";
 import { motion } from "framer-motion";
 import { Controller } from "react-hook-form";
+import { useI18n } from "../../i18n";
 
 export const Step3Questionnaire = ({ control, errors, watch }) => {
+  const { lang } = useI18n();
   // Mock calculations for real-time preview
   const recurring = parseFloat(watch("recurringRevenue")) || 0;
   const concentration = parseFloat(watch("clientConcentration")) || 0;
@@ -37,8 +39,8 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-second)]" />
           
           <div className="flex flex-col gap-2">
-            <h2 className="font-display text-2xl font-bold text-[var(--color-text-primary)]">Dati Dichiarati Quantitativi</h2>
-            <p className="text-[var(--color-text-secondary)] text-sm">Indicatori finanziari stimati.</p>
+            <h2 className="font-display text-2xl font-bold text-[var(--color-text-primary)]">{lang === "it" ? "Dati Dichiarati Quantitativi" : "Declared Quantitative Data"}</h2>
+            <p className="text-[var(--color-text-secondary)] text-sm">{lang === "it" ? "Indicatori finanziari stimati." : "Estimated financial indicators."}</p>
           </div>
 
           <div className="flex flex-col gap-8">
@@ -49,7 +51,7 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
               rules={{ required: true }}
               render={({ field }) => (
                 <Slider
-                  label="% Ricavi Ricorrenti"
+                  label={lang === "it" ? "% Ricavi Ricorrenti" : "% Recurring Revenue"}
                   min={0}
                   max={100}
                   value={field.value}
@@ -64,7 +66,7 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
               rules={{ required: true }}
               render={({ field }) => (
                 <Slider
-                  label="Concentrazione Top-3 Clienti %"
+                  label={lang === "it" ? "Concentrazione Top-3 Clienti %" : "Top-3 Client Concentration %"}
                   min={0}
                   max={100}
                   value={field.value}
@@ -75,7 +77,7 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
           </div>
 
           <div className="mt-auto bg-[var(--color-bg-surface)] p-6 rounded-xl border border-[var(--color-border-subtle)] shadow-inner flex flex-col gap-4">
-            <h3 className="font-mono text-sm tracking-widest text-[var(--color-text-secondary)]">LIVE SCORE PREVIEW</h3>
+            <h3 className="font-mono text-sm tracking-widest text-[var(--color-text-secondary)]">{lang === "it" ? "ANTEPRIMA PUNTEGGI LIVE" : "LIVE SCORE PREVIEW"}</h3>
             
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1">
@@ -114,7 +116,7 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
 
       {/* Right Column: Qualitative Scales */}
       <div className="flex-[1.5] bg-[var(--color-bg-surface)] p-8 rounded-xl border border-[var(--color-border-subtle)] shadow-[var(--shadow-card)] flex flex-col gap-6">
-        <h2 className="font-display text-xl font-bold text-[var(--color-text-primary)] mb-2">Valutazione Qualitativa</h2>
+        <h2 className="font-display text-xl font-bold text-[var(--color-text-primary)] mb-2">{lang === "it" ? "Valutazione Qualitativa" : "Qualitative Assessment"}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Controller
@@ -124,9 +126,9 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
             rules={{ required: true }}
             render={({ field }) => (
               <QualitativeScale
-                label="1. Dipendenza dal Fondatore"
-                minLabel="Autonoma"
-                maxLabel="Dipendente"
+                label={lang === "it" ? "1. Dipendenza dal Fondatore" : "1. Founder Dependency"}
+                minLabel={lang === "it" ? "Autonoma" : "Autonomous"}
+                maxLabel={lang === "it" ? "Dipendente" : "Dependent"}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -139,9 +141,9 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
             rules={{ required: true }}
             render={({ field }) => (
               <QualitativeScale
-                label="2. Struttura Manageriale"
-                minLabel="Assente"
-                maxLabel="Completo"
+                label={lang === "it" ? "2. Struttura Manageriale" : "2. Management Structure"}
+                minLabel={lang === "it" ? "Assente" : "Absent"}
+                maxLabel={lang === "it" ? "Completo" : "Complete"}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -154,7 +156,7 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
             rules={{ required: true }}
             render={({ field }) => (
               <QualitativeScale
-                label="3. Maturità Digitale"
+                label={lang === "it" ? "3. Maturità Digitale" : "3. Digital Maturity"}
                 minLabel="Carta/Excel"
                 maxLabel="Digitale"
                 value={field.value}
@@ -169,9 +171,9 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
             rules={{ required: true }}
             render={({ field }) => (
               <QualitativeScale
-                label="4. Qualità Portfolio Clienti"
-                minLabel="Dominanti"
-                maxLabel="Fidelizzato"
+                label={lang === "it" ? "4. Qualità Portfolio Clienti" : "4. Client Portfolio Quality"}
+                minLabel={lang === "it" ? "Dominanti" : "Concentrated"}
+                maxLabel={lang === "it" ? "Fidelizzato" : "Loyal"}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -184,7 +186,7 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
             rules={{ required: true }}
             render={({ field }) => (
               <QualitativeScale
-                label="5. Scalabilità del Modello"
+                label={lang === "it" ? "5. Scalabilità del Modello" : "5. Model Scalability"}
                 minLabel="Costi prop."
                 maxLabel="Scalabile"
                 value={field.value}
@@ -199,9 +201,9 @@ export const Step3Questionnaire = ({ control, errors, watch }) => {
             rules={{ required: true }}
             render={({ field }) => (
               <QualitativeScale
-                label="6. Forza della Rete"
-                minLabel="Nessuna rete"
-                maxLabel="Solido ecosistema"
+                label={lang === "it" ? "6. Forza della Rete" : "6. Network Strength"}
+                minLabel={lang === "it" ? "Nessuna rete" : "No network"}
+                maxLabel={lang === "it" ? "Solido ecosistema" : "Strong ecosystem"}
                 value={field.value}
                 onChange={field.onChange}
               />

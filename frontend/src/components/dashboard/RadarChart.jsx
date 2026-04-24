@@ -1,6 +1,8 @@
 import { Radar, RadarChart as RechartsRadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from "recharts";
+import { useI18n } from "../../i18n";
 
 export const RadarChart = ({ data }) => {
+  const { lang } = useI18n();
   return (
     <div className="w-full h-[300px] sm:h-[400px]">
       <ResponsiveContainer width="100%" height="100%">
@@ -10,7 +12,7 @@ export const RadarChart = ({ data }) => {
           <PolarRadiusAxis angle={30} domain={[0, 1]} tick={false} axisLine={false} />
           
           <Radar
-            name="Valore Attuale"
+            name={lang === "it" ? "Valore Attuale" : "Current Value"}
             dataKey="actual"
             stroke="var(--color-accent-primary)"
             fill="var(--color-accent-primary)"
